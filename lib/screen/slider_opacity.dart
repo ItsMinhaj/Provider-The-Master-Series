@@ -12,7 +12,9 @@ class SliderOpactiy extends StatefulWidget {
 class _SliderOpactiyState extends State<SliderOpactiy> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<SliderOpacityProvider>(context, listen: false);
+    // final provider = Provider.of<SliderOpacityProvider>(context, listen: false);
+
+    debugPrint("This build is called");
 
     return Scaffold(
       appBar: AppBar(
@@ -21,36 +23,39 @@ class _SliderOpactiyState extends State<SliderOpactiy> {
       ),
       body: Column(
         children: [
-          Consumer<SliderOpacityProvider>(
-            builder: (context, value, child) => Slider(
-                min: 0,
-                max: 1,
-                value: value.sliderValue,
-                onChanged: (val) {
-                  provider.setValue(val);
-                }),
-          ),
+          // Consumer<SliderOpacityProvider>(
+          //   builder: (context, value, child) =>
+          // ),
+          Slider(
+              min: 0,
+              max: 1,
+              value: context.watch<SliderOpacityProvider>().sliderValue,
+              onChanged: (val) {
+                context.read<SliderOpacityProvider>().setValue(val);
+              }),
           Row(
             children: [
               Expanded(
-                child: Consumer<SliderOpacityProvider>(
-                  builder: (context, value, child) => Container(
-                    height: 120,
-                    color: Colors.green.withOpacity(value.sliderValue),
-                    child: const Center(
-                      child: Text("Container 1"),
-                    ),
+                // child:
+                child: Container(
+                  height: 120,
+                  color: Colors.green.withOpacity(
+                      context.watch<SliderOpacityProvider>().sliderValue),
+                  child: const Center(
+                    child: Text("Container 1"),
                   ),
                 ),
               ),
               Expanded(
-                child: Consumer<SliderOpacityProvider>(
-                  builder: (context, value, child) => Container(
-                    height: 120,
-                    color: Colors.red.withOpacity(value.sliderValue),
-                    child: const Center(
-                      child: Text("Container 2"),
-                    ),
+                // child: Consumer<SliderOpacityProvider>(
+                //   builder: (context, value, child) =>
+                // ),
+                child: Container(
+                  height: 120,
+                  color: Colors.red.withOpacity(
+                      context.watch<SliderOpacityProvider>().sliderValue),
+                  child: const Center(
+                    child: Text("Container 2"),
                   ),
                 ),
               ),
